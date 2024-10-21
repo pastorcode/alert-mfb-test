@@ -60,13 +60,34 @@ Follow the steps below to set up and run the Alert MFB Backend Test application.
    ```bash
     npm install -g prisma
 
-5. Create a MySQL database for the project.
+### Database Setup
 
-6. Create a MySQL database for the project.
+1. Create a MySQL database for the project.
+
+2. Create a MySQL database for the project.
 
    ```bash
    PORT=7008
    DATABASE_URL=mysql://username:password@localhost:3306/alert_mfb_db
+
+### Seeding the Database
+
+1. Run the Prisma migrations to set up the database schema:
+
+   ```bash
+   npx prisma migrate dev --name init
+
+2. To populate the database with initial data, run the seed script:
+
+   ```bash
+   npm run seed
+
+### Running the Application
+
+1. Start the application with the following command:
+
+   ```bash
+   npm run start:dev
 
 
 ## Project Structure
@@ -92,7 +113,6 @@ The API documentation is available at [http://localhost:7008/api](http://localho
 ## Demo
 
 You can watch a demo of the application [here](https//:youtube.com) and view the live API [https://alert.mfb-test.fly.dev/](https://alert.mfb-test.fly.dev)
-
 
 
 ## Feedback
