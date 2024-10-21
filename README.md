@@ -48,17 +48,26 @@ Follow the steps below to set up and run the Alert MFB Backend Test application.
 2. Change into the project directory:
 
    ```bash
-  cd alert-mfb-test
+    cd alert-mfb-test
 
 3. Install dependencies:
 
    ```bash
-  npm install
+    npm install
 
 4. Install Prisma CLI globally (if not already installed):
 
    ```bash
-  npm install -g prisma
+    npm install -g prisma
+
+5. Create a MySQL database for the project.
+
+6. Create a MySQL database for the project.
+
+   ```bash
+   PORT=7008
+   DATABASE_URL=mysql://username:password@localhost:3306/alert_mfb_db
+
 
 ## Project Structure
 
