@@ -6,6 +6,7 @@ import { GetAllUserQueryDto } from './dto/get-all-user-query.dto';
 import { ErrorMessages } from 'src/utils/constant/error-message';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { RoleService } from '../role/role.service';
+import { AssignRoleDto } from './dto/assign-role-.dto';
 
 @Injectable()
 /**
@@ -87,16 +88,45 @@ export class UserService {
     }
   }
 
-  async assignRole(userId: number, roleId: number) {
+  async assignRole(authUserId: number, id: number, data: AssignRoleDto) {
+    const roleId = +data.roleId;
+
     try {
-      const user = await this.usersRepository.findById(userId);
+      // Check if user exists
+      const user = await this.usersRepository.findById(id);
       if (!user) {
         throw new HttpException(
           ErrorMessages.USER_NOT_FOUND,
           HttpStatus.NOT_FOUND,
         );
       }
-      // const role = await this.usersRepository.findRoleById(roleId);
+
+      // Check if role exists
+      const role = await this.roleService.findById(roleId);
+      if (!role) {
+        throw new HttpException(
+          ErrorMessages.ROLE_NOT_FOUND,
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      // Check if the auth user exist
+      const assignedBy = await this.usersRepository.findById(authUserId);
+      if (!assignedBy) {
+        throw new HttpException(
+          ErrorMessages.USER_NOT_FOUND,
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      await this.roleService.createUserRole({
+        user: { connect: { id } },
+        role: { connect: { id: roleId } },
+        assignedBy: { connect: { id: authUserId } },
+        assignedAt: new Date(),
+      });
+
+      return this.usersRepository.findById(id);
     } catch (e) {
       throw new HttpException(e.message, HttpStatus.BAD_REQUEST);
     }

@@ -30,13 +30,15 @@ export class UserRepository {
     const { page = 1, perPage = 10, keyword, role } = query;
     const skip = page && perPage ? (page - 1) * perPage : 0;
     const take = perPage ? Number(perPage) : 10;
+
     const where: any = {
       AND: [{ deleted: false }],
     };
 
     if (keyword) {
       where.OR = [
-        { name: { contains: keyword, mode: 'insensitive' } },
+        { firstName: { contains: keyword, mode: 'insensitive' } },
+        { lastName: { contains: keyword, mode: 'insensitive' } },
         { email: { contains: keyword, mode: 'insensitive' } },
       ];
     }
@@ -45,7 +47,7 @@ export class UserRepository {
       where.AND.push({
         roles: {
           some: {
-            name: { contains: role, mode: 'insensitive' },
+            role: { name: { contains: role, mode: 'insensitive' } },
           },
         },
       });
@@ -55,12 +57,23 @@ export class UserRepository {
       where,
       skip,
       take,
-      orderBy: { createdAt: 'desc' },
       include: {
-        roles: true,
+        roles: {
+          include: {
+            role: {
+              select: {
+                id: true,
+                name: true,
+                permissions: true,
+              },
+            },
+          },
+        },
       },
     });
+
     const total = await this.prismaService.user.count({ where });
+
     return { users, total };
   }
 
@@ -79,7 +92,22 @@ export class UserRepository {
    * @returns {Promise<User | null>}
    */
   async findById(id: number): Promise<User | null> {
-    return this.prismaService.user.findUnique({ where: { id } });
+    return this.prismaService.user.findUnique({
+      where: { id, deleted: false },
+      include: {
+        roles: {
+          include: {
+            role: {
+              select: {
+                id: true,
+                name: true,
+                permissions: true,
+              },
+            },
+          },
+        },
+      },
+    });
   }
 
   /**

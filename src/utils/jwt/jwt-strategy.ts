@@ -28,7 +28,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       },
     });
 
-    // console.log('user in strategy', user.roles);
+    console.log('user in strategy', user.roles);
 
     if (!user) {
       throw new HttpException(

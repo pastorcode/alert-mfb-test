@@ -43,7 +43,6 @@ export class AuthController {
   }
 
   @Get('me')
-  @ApiBearerAuth('JWT')
   @UseGuards(JwtGuard)
   async me(@GetUser() user: User) {
     try {

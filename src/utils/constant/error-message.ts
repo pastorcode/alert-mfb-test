@@ -6,4 +6,5 @@ export enum ErrorMessages {
   INVALID_EMAIL_OR_PASSWORD = 'Invalid email or password provided.',
   UNAUTHORIZED = 'Unauthorized Access; Please Login.',
   USER_NOT_FOUND = 'User not found',
+  ROLE_NOT_FOUND = 'Role not found',
 }

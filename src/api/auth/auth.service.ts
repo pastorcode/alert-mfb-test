@@ -149,7 +149,7 @@ export class AuthService {
    * @param {string} hashedPassword - The hashed password to compare
    * @returns {Promise<boolean>}
    **/
-  private async comparePassword(
+  public async comparePassword(
     password: string,
     hashedPassword: string,
   ): Promise<boolean> {

@@ -20,7 +20,8 @@ import { SuccessResponseDto } from 'src/utils/dtos/success-reponse.dto';
 import { SuccessMessages } from 'src/utils/constant/success-messages';
 import { RolesGuard } from 'src/utils/guard/role.guard';
 import { JwtGuard } from 'src/utils/guard/jwt.guard';
-import { Roles } from 'src/utils/decorators';
+import { GetUser, Roles } from 'src/utils/decorators';
+import { AssignRoleDto } from './dto/assign-role-.dto';
 
 @ApiTags('User')
 @Controller('users')
@@ -81,5 +82,24 @@ export class UserController {
     }
   }
 
-  // @Post('assign-role')
+  @Post(':id/assign-role')
+  @Roles('Admin')
+  @UseGuards(JwtGuard, RolesGuard)
+  async assignRole(
+    @Param('id') id: number,
+    @Body() data: AssignRoleDto,
+    @GetUser() user,
+  ) {
+    try {
+      const authUserId = user.id;
+      const response = await this.userService.assignRole(
+        +authUserId,
+        +id,
+        data,
+      );
+      return new SuccessResponseDto(SuccessMessages.ROLE_ASSIGNED, response);
+    } catch (e) {
+      throw new HttpException(e.message, HttpStatus.BAD_REQUEST);
+    }
+  }
 }
