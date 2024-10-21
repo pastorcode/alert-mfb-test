@@ -146,13 +146,13 @@ export class AuthService {
   /**
    * Compares a password with a hashed password
    * @param {string} password - The password to compare
-   * @param {string} $2b$10$0UfkrUZeEJPwbFop7.I4UeggIBP33tQPAL9r8n1UIrS5IRW/W7H.i - The hashed password to compare
+   * @param {string} hashedPassword - The hashed password to compare
    * @returns {Promise<boolean>}
    **/
   public async comparePassword(
     password: string,
-    $2b$10$0UfkrUZeEJPwbFop7.I4UeggIBP33tQPAL9r8n1UIrS5IRW/W7H.i: string,
+    hashedPassword: string,
   ): Promise<boolean> {
-    return await bcrypt.compare(password, $2b$10$0UfkrUZeEJPwbFop7.I4UeggIBP33tQPAL9r8n1UIrS5IRW/W7H.i);
+    return await bcrypt.compare(password, hashedPassword);
   }
 }

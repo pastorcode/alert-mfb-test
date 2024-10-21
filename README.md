@@ -112,7 +112,7 @@ The API documentation is available at [http://localhost:7008/api](http://localho
 
 ## Demo
 
-You can watch a demo of the API [here](https://drive.google.com/drive/folders/1f-kOBxtTpZNSMXZuW-CeaLIti-7oIU2Q?usp=sharing) and test the live API [https://alert.mfb-test.fly.dev/](https://alert.mfb-test.fly.dev)
+You can watch a demo of the API [here](https://drive.google.com/drive/folders/1f-kOBxtTpZNSMXZuW-CeaLIti-7oIU2Q?usp=sharing) and test the live API [https://alert-mfb-test.fly.dev/api](https://alert-mfb-test.fly.dev/api)
 
 
 ## Feedback
